@@ -40,10 +40,20 @@ public struct RswiftCore {
 
       let buildConfigurations = try xcodeproj.buildConfigurations(forTarget: callInformation.targetName)
       
-      let resourceURLs = try xcodeproj.resourcePaths(forTarget: callInformation.targetName)
+      var resourceURLs = try xcodeproj.resourcePaths(forTarget: callInformation.targetName)
         .map { path in path.url(with: callInformation.urlForSourceTreeFolder) }
         .compactMap { $0 }
         .filter { !ignoreFile.matches(url: $0) }
+        
+        
+        if let resourcesBundlePath = try? xcodeproj.resourcePaths(forTarget: callInformation.targetName + "Resources") {
+            let extraBundleResources = resourcesBundlePath
+                .map { path in path.url(with: callInformation.urlForSourceTreeFolder) }
+                .compactMap { $0 }
+                .filter { !ignoreFile.matches(url: $0) }
+            
+            resourceURLs += extraBundleResources
+        }
 
       let resources = Resources(resourceURLs: resourceURLs, fileManager: FileManager.default)
       let infoPlistWhitelist = ["UIApplicationShortcutItems", "UIApplicationSceneManifest", "NSUserActivityTypes", "NSExtension"]
