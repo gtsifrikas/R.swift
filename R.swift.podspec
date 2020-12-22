@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
   spec.tvos.deployment_target    = '9.0'
   spec.watchos.deployment_target = '2.2'
 
-  spec.dependency "R.swift.Library", "~> 5.3.0"
+  spec.dependency "R.swift.Library", "~> 5.3.0", :git => 'https://github.com/gtsifrikas/R.swift.Library.git', :branch => 'workable_tuist_support'
 
   spec.preserve_paths = "rswift"
 

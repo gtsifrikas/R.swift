@@ -2,7 +2,12 @@ platform :ios, '10.0'
 
 project 'LocalizedStringApp'
 
-pod 'R.swift.Library', :git => 'https://github.com/mac-cain13/R.swift.Library.git'
+def rswiftlib
+#  pod 'R.swift.Library', :git => 'https://github.com/mac-cain13/R.swift.Library.git' # for CI builds
+  pod 'R.swift.Library', :path => '../../R.swift.Library' # for development
+end
+
+rswiftlib
 
 target 'LocalizedStringApp'
 target 'LocalizedStringAppTests'
